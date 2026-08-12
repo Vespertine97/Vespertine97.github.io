@@ -57,8 +57,6 @@
   
   <!-- 预先加载的JS文件 -->
   
-    <script src="/vendors/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
-  
   <!-- 自定义站点横幅和背景 -->
   <style>
     
@@ -346,15 +344,6 @@ mjx-container[display="true"] + br {
             
             
             
-                <div class="post-actions text-center clearfix" id="post-actions">
-                
-                    <a class="donate" href="javascript:;" onclick="krOpenDonateModal()"><i class="fa fa-bitcoin"></i> 打赏</a>
-                
-                
-                    <a class="share" href="javascript:;" onclick="krOpenShareModal()"><i class="fa fa-share-alt"></i> 分享</a>
-                
-                </div>
-            
             <div class="footer-tag clearfix">
                 <div class="pull-date">
                     <time datetime="2026-08-12T07:02:34.651Z" itemprop="dateModified">最后编辑：2026-08-12</time>
@@ -512,8 +501,8 @@ mjx-container[display="true"] + br {
                             </li>
                         
                             <li>
-                                <a href="/atom.xml" target="_blank" rel="nofollow">
-                                    <i class="fa fa-rss"></i>
+                                <a href="/assets/微信二维码.jpg" target="_blank" rel="nofollow">
+                                    <i class="fa fa-wechat"></i>
                                 </a>
                             </li>
                         
@@ -566,56 +555,6 @@ mjx-container[display="true"] + br {
 </div>
 
 
-    <div id="kr-donate-modal" class="kr-modal">
-    <div class="kr-modal-bg" onclick="krCloseDonateModal()"></div>
-    <div class="kr-modal-content">
-        <div class="kr-modal-header">
-            <div class="kr-modal-icon">
-                <i class="fa fa-bitcoin"></i>
-            </div>
-            <div class="kr-modal-title">打赏</div>
-            <button class="kr-modal-close" onclick="krCloseDonateModal()">
-                <i class="fa fa-times-circle"></i>
-            </button>
-        </div>
-        <div class="kr-modal-body">
-            <div class="kr-donate-message">打赏提示信息</div>
-            <div class="kr-donate-qr" id="kr-donate-qr">
-                
-            </div>
-            <div class="kr-donate-platforms">
-                
-            </div>
-        </div>
-    </div>
-</div>
-<script defer src="/js/kr-modal/donate.min.js"></script>
-
-
-
-
-    <div id="kr-share-modal" class="kr-modal">
-    <div class="kr-modal-bg" onclick="krCloseShareModal()"></div>
-    <div class="kr-modal-content">
-        <div class="kr-modal-header">
-            <div class="kr-modal-icon">
-                <i class="fa fa-share-alt"></i>
-            </div>
-            <div class="kr-modal-title">分享</div>
-            <button class="kr-modal-close" onclick="krCloseShareModal()">
-                <i class="fa fa-times-circle"></i>
-            </button>
-        </div>
-        <div class="kr-modal-body">
-            <div class="kr-share-message">分享提示信息</div>
-            <div class="kr-share-qr" id="kr-share-qr"></div>
-            <div class="kr-share-platforms">
-                
-            </div>
-        </div>
-    </div>
-</div>
-<script defer src="/js/kr-modal/share.min.js"></script>
 
 
 
