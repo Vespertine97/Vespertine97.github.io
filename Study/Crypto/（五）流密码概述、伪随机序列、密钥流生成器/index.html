@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  
+    <link rel="icon" href="/assets/avatar.jpg">
+  
+  
+  <title>【密码学】（五）流密码概述、伪随机序列、密钥流生成器 | 魏欣怡的博客</title>
+  <link rel="canonical" href="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%BA%94%EF%BC%89%E6%B5%81%E5%AF%86%E7%A0%81%E6%A6%82%E8%BF%B0%E3%80%81%E4%BC%AA%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97%E3%80%81%E5%AF%86%E9%92%A5%E6%B5%81%E7%94%9F%E6%88%90%E5%99%A8/">
+  <meta name="author" content="魏欣怡" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="" />
+  
+  <meta name="description" content="本文转载自：《现代密码学》课程笔记知乎专栏仅作个人学习记录。  一、流密码的起源和伪随机序列1、流密码的概念和起源： 流密码是一种对称密码体制。它一次只对明文的一个位进行加密，然后得出密文。 典型的流密码起源于Vernam密码体制（第一篇古典密码学讲过），它通过明文序列和密钥流（通常和明文序列等长）的按位异或来得出密文。这种按位异或是典型的流密码的特征。 其加解密体制如下图所示。其中明文长度&#x3D;密">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【密码学】（五）流密码概述、伪随机序列、密钥流生成器">
+<meta property="og:url" content="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%BA%94%EF%BC%89%E6%B5%81%E5%AF%86%E7%A0%81%E6%A6%82%E8%BF%B0%E3%80%81%E4%BC%AA%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97%E3%80%81%E5%AF%86%E9%92%A5%E6%B5%81%E7%94%9F%E6%88%90%E5%99%A8/index.html">
+<meta property="og:site_name" content="魏欣怡的博客">
+<meta property="og:description" content="本文转载自：《现代密码学》课程笔记知乎专栏仅作个人学习记录。  一、流密码的起源和伪随机序列1、流密码的概念和起源： 流密码是一种对称密码体制。它一次只对明文的一个位进行加密，然后得出密文。 典型的流密码起源于Vernam密码体制（第一篇古典密码学讲过），它通过明文序列和密钥流（通常和明文序列等长）的按位异或来得出密文。这种按位异或是典型的流密码的特征。 其加解密体制如下图所示。其中明文长度&#x3D;密">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://vespertine97.github.io/assets/crypto/images.jpg">
+<meta property="article:published_time" content="2026-08-12T06:05:00.000Z">
+<meta property="article:modified_time" content="2026-08-12T08:30:06.402Z">
+<meta property="article:author" content="魏欣怡">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://vespertine97.github.io/assets/crypto/images.jpg">
+  
+  <!-- JSON-LD 结构化数据 -->
+  
+  
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"【密码学】（五）流密码概述、伪随机序列、密钥流生成器","description":"\n本文转载自：《现代密码学》课程笔记知乎专栏仅作个人学习记录。\n\n","image":"https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%BA%94%EF%BC%89%E6%B5%81%E5%AF%86%E7%A0%81%E6%A6%82%E8%BF%B0%E3%80%81%E4%BC%AA%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97%E3%80%81%E5%AF%86%E9%92%A5%E6%B5%81%E7%94%9F%E6%88%90%E5%99%A8/assets/crypto/images.jpg","author":{"@type":"Person","name":"魏欣怡"},"publisher":{"@type":"Organization","name":"魏欣怡的博客","logo":{"@type":"ImageObject","url":"https://vespertine97.github.io/assets/avatar.jpg"}},"datePublished":"2026-08-12T06:05:00.000Z","dateModified":"2026-08-12T08:30:06.402Z","mainEntityOfPage":{"@type":"WebPage","@id":"https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%BA%94%EF%BC%89%E6%B5%81%E5%AF%86%E7%A0%81%E6%A6%82%E8%BF%B0%E3%80%81%E4%BC%AA%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97%E3%80%81%E5%AF%86%E9%92%A5%E6%B5%81%E7%94%9F%E6%88%90%E5%99%A8/"}}
+    </script>
+  
+  <!-- 关键 CSS 预加载 -->
+  <link rel="preload" href="/css/kr-core.min.css" as="style" crossorigin>
+  <link rel="preload" href="/css/kr-theme/light.min.css" as="style" crossorigin>
+  <link rel="preload" href="/css/kr-theme/dark.min.css" as="style" crossorigin>
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kr-core.min.css" media="all">
+  <link rel="stylesheet" id="theme-light-css" href="/css/kr-theme/light.min.css" media="all">
+  <link rel="stylesheet" id="theme-dark-css" href="/css/kr-theme/dark.min.css" media="(prefers-color-scheme: dark)">
+  
+    <link rel="stylesheet"  id="highlight-css" href="/css/highlight/highlight.js/atom-dark.min.css" media="print" onload="this.media='all'" onerror="this.media='all'"><noscript><link rel="stylesheet" href="/css/highlight/highlight.js/atom-dark.min.css"></noscript>
+  
+  <script src="/js/kr-theme.min.js"></script>
+  <link rel="stylesheet"  id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="print" onload="this.media='all'" onerror="this.media='all'"><noscript><link rel="stylesheet" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css"></noscript>
+  
+    <link rel="stylesheet"  id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="print" onload="this.media='all'" onerror="this.media='all'"><noscript><link rel="stylesheet" href="/vendors/nprogress@0.2.0/nprogress.css"></noscript>
+  
+  
+    <link rel="stylesheet"  href="/vendors/viewerjs@1.11.6/dist/viewer.min.css" media="print" onload="this.media='all'" onerror="this.media='all'"><noscript><link rel="stylesheet" href="/vendors/viewerjs@1.11.6/dist/viewer.min.css"></noscript>
+  
+  <!-- 预先加载的JS文件 -->
+  
+  <!-- 自定义站点横幅和背景 -->
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/assets/banner.png');
+      }
+      html[data-theme="dark"] .kratos-cover.kratos-cover-2 {
+        background-image: url('/assets/banner_dark.png');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/assets/background.jpg');
+        }
+        html[data-theme="dark"] body.custom-background {
+          background-image: url('/assets/background_dark.jpg');
+        }
+      }
+    
+    
+      .widget-kratos-about .photo-background {
+        background-image: url('/assets/about.jpg');
+      }
+      html[data-theme="dark"] .widget-kratos-about .photo-background {
+        background-image: url('/assets/about.jpg');
+      }
+    
+  </style>
+
+  <!-- 额外的追加注入项 -->
+  
+<meta name="generator" content="Hexo 8.1.2"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    <li>
+                                        
+                                            <a href="/">
+                                        
+                                            
+                                                <i class="fa fa-home"></i>
+                                            
+                                            Home
+                                        </a>
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            <a href="/archives/">
+                                        
+                                            
+                                                <i class="fa fa-book"></i>
+                                            
+                                            Archives
+                                        </a>
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            <a href="/friends/">
+                                        
+                                            
+                                                <i class="fa fa-link"></i>
+                                            
+                                            Friends
+                                        </a>
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            <a href="/aboutme/">
+                                        
+                                            
+                                                <i class="fa fa-paper-plane"></i>
+                                            
+                                            About me
+                                        </a>
+                                        
+                                    </li>
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">魏欣怡的博客</a></div>
+                    <div id="kratos-nav-toggle-wrapper" class="nav-toggle">
+                        <a id="kratos-nav-toggle" class="kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>魏欣怡的博客</h2> <br />
+                        <span>君子慎独…</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+
+
+        
+
+            
+
+            <section class="kr-main-col col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%BA%94%EF%BC%89%E6%B5%81%E5%AF%86%E7%A0%81%E6%A6%82%E8%BF%B0%E3%80%81%E4%BC%AA%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97%E3%80%81%E5%AF%86%E9%92%A5%E6%B5%81%E7%94%9F%E6%88%90%E5%99%A8/">
+    <div class="kratos-hentry kratos-page-inner clearfix">
+        <header class="kratos-page-header">
+            
+                <h1 class="kratos-page-title text-center" itemprop="name headline">【密码学】（五）流密码概述、伪随机序列、密钥流生成器</h1>
+            
+            <ul class="kratos-page-meta text-center">
+                <li><time datetime="2026-08-12T06:05:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2026-08-12</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">魏欣怡</span>
+                </li>
+                
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            ~3.25K
+                        
+                        字
+                    </li>
+                
+                
+                
+            </ul>
+        </header>
+        <div class="kratos-page-content kr-post">
+            
+            
+            
+                <div class="kratos-post-inner-toc toc-div-class" >
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%B5%81%E5%AF%86%E7%A0%81%E7%9A%84%E8%B5%B7%E6%BA%90%E5%92%8C%E4%BC%AA%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97"><span class="toc-number">1.</span> <span class="toc-text">一、流密码的起源和伪随机序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%B5%81%E5%AF%86%E7%A0%81%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text">二、流密码的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AF%86%E9%92%A5%E6%B5%81%E4%BA%A7%E7%94%9F%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">三、密钥流产生器</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><blockquote>
+<p>本文转载自：<a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1348587875936673792">《现代密码学》课程笔记知乎专栏</a><br>仅作个人学习记录。</p>
+</blockquote>
+<h2 id="一、流密码的起源和伪随机序列"><a href="#一、流密码的起源和伪随机序列" class="headerlink" title="一、流密码的起源和伪随机序列"></a>一、流密码的起源和<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=169383689&amp;content_type=Article&amp;match_order=1&amp;q=%E4%BC%AA%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97&amp;zhida_source=entity">伪随机序列</a></h2><p><strong>1、流密码的概念和起源：</strong></p>
+<p>流密码是一种对称密码体制。它一次只对明文的一个位进行加密，然后得出密文。</p>
+<p>典型的流密码起源于<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=169383689&amp;content_type=Article&amp;match_order=1&amp;q=Vernam%E5%AF%86%E7%A0%81%E4%BD%93%E5%88%B6&amp;zhida_source=entity">Vernam密码体制</a>（第一篇古典密码学讲过），它通过<strong>明文序列和密钥流</strong>（通常和明文序列等长）的<strong>按位异或</strong>来得出密文。这种按位异或是典型的流密码的特征。</p>
+<p>其加解密体制如下图所示。其中明文长度=密钥长度=密文长度。加解密变换中的模2加等价于异或。</p>
+<p><img src="https://pic1.zhimg.com/v2-cccab1845a31abb95831b72343ebb110_1440w.jpg" alt=""></p>
+<p>图8-1 流密码的加解密方式</p>
+<p><strong>2、流密码的核心问题：</strong></p>
+<p>在第一篇中，我们曾提到：如果Vernam密码体制中的<strong>密钥流是完全随机的</strong>，那么这种加密体制就是绝对安全的（理论上不可破译）。然而，完全随机的无限长的密钥流的生成、分发和存储是非常困难的。因此，我们需要采用另外一种思路来生成接近随机的密钥流。</p>
+<p>我们需要使用有限长的种子密钥（易生成、分发、存储），来生成无限长的随机密钥序列——我们称拥有这种功能的算法为<strong>伪随机序列发生器</strong>。如何设计高效而又安全的伪随机数发生器，是流密码的核心研究内容。</p>
+<p><strong>3、伪随机序列：</strong></p>
+<p>之所以要给“伪随机序列”加一个“伪”字，是因为伪随机序列发生器生成的随机序列并不是完全随机的。它往往拥有一定的周期性，只能做到在窃取较短的一段序列时，不会泄露太多信息而已。</p>
+<p><strong>4、伪随机序列应该满足的条件：</strong></p>
+<p>作为一个合格的伪随机序列，应该需要看起来足够随机，不然会不太安全。</p>
+<p>为了衡量一个伪随机序列是否足够随机，我们可以采用一定的方法对其进行测评。</p>
+<blockquote>
+<p>[!note] 补充：<br><strong>（1）游程的概念：</strong><br>游程就是一个序列中，相同符号连续出现的次数。比如，对于序列00110111，其前两个数字为0的2游程；接下来是1的2游程；然后是0的1游程和1的3游程。<br><strong>（2）自相关函数：</strong><br>对于一个周期为 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.593ex" height="1.532ex" role="img" focusable="false" viewBox="0 -677 704 677"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="T"><g data-mml-node="mi" data-latex="T"><path data-c="1D447" d="M344 631C344 628 343 621 340 611L208 83C204 68 200 59 197 55C188 44 154 39 94 39C63 39 49 42 49 16C49 5 56 0 69 0C120 0 192 4 235 3L317 2C331 2 386 0 403 0C420 0 428 8 428 24C428 34 416 39 391 39C339 39 309 41 300 46C297 48 295 52 295 58L430 603C433 617 436 626 439 629C443 635 467 638 511 638C566 638 604 634 623 625C642 616 652 595 652 561C652 543 649 517 644 483C642 475 641 469 641 464C641 453 646 447 657 447C666 447 672 456 675 473L702 645C703 650 704 656 704 662C704 672 694 677 673 677L125 677C99 677 97 674 89 655L30 481C27 472 25 466 24 462C24 452 29 447 40 447C48 447 55 455 60 470C85 543 110 588 133 607C159 628 209 638 282 638L321 638C332 638 344 639 344 631Z"></path></g></g></g></svg></mjx-container> 的序列 $a=(a<em>0,a_1,\ldots,a</em>{T-1})<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="29.412ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 13000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="（截取其中的一段周期）（共 "><g data-mml-node="mi" data-latex="（"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">（</text></g><g data-mml-node="mi" data-latex="截" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">截</text></g><g data-mml-node="mi" data-latex="取" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">取</text></g><g data-mml-node="mi" data-latex="其" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">其</text></g><g data-mml-node="mi" data-latex="中" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">中</text></g><g data-mml-node="mi" data-latex="的" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">的</text></g><g data-mml-node="mi" data-latex="一" transform="translate(6000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">一</text></g><g data-mml-node="mi" data-latex="段" transform="translate(7000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">段</text></g><g data-mml-node="mi" data-latex="周" transform="translate(8000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">周</text></g><g data-mml-node="mi" data-latex="期" transform="translate(9000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">期</text></g><g data-mml-node="mi" data-latex="）" transform="translate(10000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">）</text></g><g data-mml-node="mi" data-latex="（" transform="translate(11000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">（</text></g><g data-mml-node="mi" data-latex="共" transform="translate(12000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">共</text></g></g></g></svg></mjx-container>T<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="24.887ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 11000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex=" 个），如果将其向左平移 "><g data-mml-node="mi" data-latex="个"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">个</text></g><g data-mml-node="mi" data-latex="）" transform="translate(1000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">）</text></g><g data-mml-node="mi" data-latex="，" transform="translate(2000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="如" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">如</text></g><g data-mml-node="mi" data-latex="果" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">果</text></g><g data-mml-node="mi" data-latex="将" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">将</text></g><g data-mml-node="mi" data-latex="其" transform="translate(6000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">其</text></g><g data-mml-node="mi" data-latex="向" transform="translate(7000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">向</text></g><g data-mml-node="mi" data-latex="左" transform="translate(8000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">左</text></g><g data-mml-node="mi" data-latex="平" transform="translate(9000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">平</text></g><g data-mml-node="mi" data-latex="移" transform="translate(10000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">移</text></g></g></g></svg></mjx-container>t<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="15.837ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 7000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex=" 位，则得到序列 "><g data-mml-node="mi" data-latex="位"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">位</text></g><g data-mml-node="mi" data-latex="，" transform="translate(1000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="则" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">则</text></g><g data-mml-node="mi" data-latex="得" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">得</text></g><g data-mml-node="mi" data-latex="到" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">到</text></g><g data-mml-node="mi" data-latex="序" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">序</text></g><g data-mml-node="mi" data-latex="列" transform="translate(6000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">列</text></g></g></g></svg></mjx-container>a^{(t)}=(a<em>t,a</em>{t+1},\ldots,a<em>{t-1})<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="9.05ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 4000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="（也是共 "><g data-mml-node="mi" data-latex="（"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">（</text></g><g data-mml-node="mi" data-latex="也" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">也</text></g><g data-mml-node="mi" data-latex="是" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">是</text></g><g data-mml-node="mi" data-latex="共" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">共</text></g></g></g></svg></mjx-container>T<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="13.575ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 6000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex=" 个）。若其中 "><g data-mml-node="mi" data-latex="个"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">个</text></g><g data-mml-node="mi" data-latex="）" transform="translate(1000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">）</text></g><g data-mml-node="mo" data-latex="。" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">。</text></g><g data-mml-node="mi" data-latex="若" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">若</text></g><g data-mml-node="mi" data-latex="其" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">其</text></g><g data-mml-node="mi" data-latex="中" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">中</text></g></g></g></svg></mjx-container>a_i=a</em>{i+t}<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="20.362ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 9000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="，则表示平移后，第 "><g data-mml-node="mi" data-latex="，"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="则" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">则</text></g><g data-mml-node="mi" data-latex="表" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">表</text></g><g data-mml-node="mi" data-latex="示" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">示</text></g><g data-mml-node="mi" data-latex="平" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">平</text></g><g data-mml-node="mi" data-latex="移" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">移</text></g><g data-mml-node="mi" data-latex="后" transform="translate(6000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">后</text></g><g data-mml-node="mi" data-latex="，" transform="translate(7000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="第" transform="translate(8000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">第</text></g></g></g></svg></mjx-container>i<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="63.348ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 28000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex=" 位仍相等。假如对两个序列进行对比，之后发现相同位的个数为 "><g data-mml-node="mi" data-latex="位"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">位</text></g><g data-mml-node="mi" data-latex="仍" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">仍</text></g><g data-mml-node="mi" data-latex="相" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">相</text></g><g data-mml-node="mi" data-latex="等" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">等</text></g><g data-mml-node="mo" data-latex="。" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">。</text></g><g data-mml-node="mi" data-latex="假" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">假</text></g><g data-mml-node="mi" data-latex="如" transform="translate(6000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">如</text></g><g data-mml-node="mi" data-latex="对" transform="translate(7000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">对</text></g><g data-mml-node="mi" data-latex="两" transform="translate(8000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">两</text></g><g data-mml-node="mi" data-latex="个" transform="translate(9000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">个</text></g><g data-mml-node="mi" data-latex="序" transform="translate(10000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">序</text></g><g data-mml-node="mi" data-latex="列" transform="translate(11000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">列</text></g><g data-mml-node="mi" data-latex="进" transform="translate(12000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">进</text></g><g data-mml-node="mi" data-latex="行" transform="translate(13000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">行</text></g><g data-mml-node="mi" data-latex="对" transform="translate(14000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">对</text></g><g data-mml-node="mi" data-latex="比" transform="translate(15000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">比</text></g><g data-mml-node="mi" data-latex="，" transform="translate(16000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="之" transform="translate(17000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">之</text></g><g data-mml-node="mi" data-latex="后" transform="translate(18000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">后</text></g><g data-mml-node="mi" data-latex="发" transform="translate(19000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">发</text></g><g data-mml-node="mi" data-latex="现" transform="translate(20000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">现</text></g><g data-mml-node="mi" data-latex="相" transform="translate(21000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">相</text></g><g data-mml-node="mi" data-latex="同" transform="translate(22000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">同</text></g><g data-mml-node="mi" data-latex="位" transform="translate(23000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">位</text></g><g data-mml-node="mi" data-latex="的" transform="translate(24000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">的</text></g><g data-mml-node="mi" data-latex="个" transform="translate(25000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">个</text></g><g data-mml-node="mi" data-latex="数" transform="translate(26000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">数</text></g><g data-mml-node="mi" data-latex="为" transform="translate(27000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">为</text></g></g></g></svg></mjx-container>n<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="18.1ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 8000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="，不同位的个数为 "><g data-mml-node="mi" data-latex="，"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="不" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">不</text></g><g data-mml-node="mi" data-latex="同" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">同</text></g><g data-mml-node="mi" data-latex="位" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">位</text></g><g data-mml-node="mi" data-latex="的" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">的</text></g><g data-mml-node="mi" data-latex="个" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">个</text></g><g data-mml-node="mi" data-latex="数" transform="translate(6000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">数</text></g><g data-mml-node="mi" data-latex="为" transform="translate(7000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">为</text></g></g></g></svg></mjx-container>d<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="6.787ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 3000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="，则称 "><g data-mml-node="mi" data-latex="，"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="则" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">则</text></g><g data-mml-node="mi" data-latex="称" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">称</text></g></g></g></svg></mjx-container>R(t)=n-d<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="18.1ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 8000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex=" 为自相关函数。当 "><g data-mml-node="mi" data-latex="为"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">为</text></g><g data-mml-node="mi" data-latex="自" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">自</text></g><g data-mml-node="mi" data-latex="相" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">相</text></g><g data-mml-node="mi" data-latex="关" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">关</text></g><g data-mml-node="mi" data-latex="函" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">函</text></g><g data-mml-node="mi" data-latex="数" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">数</text></g><g data-mml-node="mo" data-latex="。" transform="translate(6000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">。</text></g><g data-mml-node="mi" data-latex="当" transform="translate(7000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">当</text></g></g></g></svg></mjx-container>t\ne0<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="40.724ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 18000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex=" 时，称为异相自相关函数。
+举例：对序列 "><g data-mml-node="mi" data-latex="时"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">时</text></g><g data-mml-node="mi" data-latex="，" transform="translate(1000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="称" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">称</text></g><g data-mml-node="mi" data-latex="为" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">为</text></g><g data-mml-node="mi" data-latex="异" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">异</text></g><g data-mml-node="mi" data-latex="相" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">相</text></g><g data-mml-node="mi" data-latex="自" transform="translate(6000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">自</text></g><g data-mml-node="mi" data-latex="相" transform="translate(7000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">相</text></g><g data-mml-node="mi" data-latex="关" transform="translate(8000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">关</text></g><g data-mml-node="mi" data-latex="函" transform="translate(9000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">函</text></g><g data-mml-node="mi" data-latex="数" transform="translate(10000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">数</text></g><g data-mml-node="mo" data-latex="。" transform="translate(11000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">。</text></g><g data-mml-node="mi" data-latex="举" transform="translate(12000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">举</text></g><g data-mml-node="mi" data-latex="例" transform="translate(13000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">例</text></g><g data-mml-node="mi" data-latex="：" transform="translate(14000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">：</text></g><g data-mml-node="mi" data-latex="对" transform="translate(15000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">对</text></g><g data-mml-node="mi" data-latex="序" transform="translate(16000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">序</text></g><g data-mml-node="mi" data-latex="列" transform="translate(17000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">列</text></g></g></g></svg></mjx-container>100110<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="6.787ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 3000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="（周期 "><g data-mml-node="mi" data-latex="（"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">（</text></g><g data-mml-node="mi" data-latex="周" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">周</text></g><g data-mml-node="mi" data-latex="期" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">期</text></g></g></g></svg></mjx-container>T=6<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="18.1ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 8000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="）左平移两位（即 "><g data-mml-node="mi" data-latex="）"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">）</text></g><g data-mml-node="mi" data-latex="左" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">左</text></g><g data-mml-node="mi" data-latex="平" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">平</text></g><g data-mml-node="mi" data-latex="移" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">移</text></g><g data-mml-node="mi" data-latex="两" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">两</text></g><g data-mml-node="mi" data-latex="位" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">位</text></g><g data-mml-node="mi" data-latex="（" transform="translate(6000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">（</text></g><g data-mml-node="mi" data-latex="即" transform="translate(7000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">即</text></g></g></g></svg></mjx-container>t=2<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="9.05ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 4000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="），得到 "><g data-mml-node="mi" data-latex="）"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">）</text></g><g data-mml-node="mi" data-latex="，" transform="translate(1000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="得" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">得</text></g><g data-mml-node="mi" data-latex="到" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">到</text></g></g></g></svg></mjx-container>011010<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="24.887ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 11000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="，对比可以看出，相同位 "><g data-mml-node="mi" data-latex="，"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="对" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">对</text></g><g data-mml-node="mi" data-latex="比" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">比</text></g><g data-mml-node="mi" data-latex="可" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">可</text></g><g data-mml-node="mi" data-latex="以" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">以</text></g><g data-mml-node="mi" data-latex="看" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">看</text></g><g data-mml-node="mi" data-latex="出" transform="translate(6000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">出</text></g><g data-mml-node="mi" data-latex="，" transform="translate(7000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="相" transform="translate(8000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">相</text></g><g data-mml-node="mi" data-latex="同" transform="translate(9000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">同</text></g><g data-mml-node="mi" data-latex="位" transform="translate(10000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">位</text></g></g></g></svg></mjx-container>n=2<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="9.05ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 4000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="，不同位 "><g data-mml-node="mi" data-latex="，"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="不" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">不</text></g><g data-mml-node="mi" data-latex="同" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">同</text></g><g data-mml-node="mi" data-latex="位" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">位</text></g></g></g></svg></mjx-container>d=4<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="29.412ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 13000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="。因此，其异相自相关函数为 "><g data-mml-node="mo" data-latex="。"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">。</text></g><g data-mml-node="mi" data-latex="因" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">因</text></g><g data-mml-node="mi" data-latex="此" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">此</text></g><g data-mml-node="mi" data-latex="，" transform="translate(3000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="其" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">其</text></g><g data-mml-node="mi" data-latex="异" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">异</text></g><g data-mml-node="mi" data-latex="相" transform="translate(6000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">相</text></g><g data-mml-node="mi" data-latex="自" transform="translate(7000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">自</text></g><g data-mml-node="mi" data-latex="相" transform="translate(8000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">相</text></g><g data-mml-node="mi" data-latex="关" transform="translate(9000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">关</text></g><g data-mml-node="mi" data-latex="函" transform="translate(10000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">函</text></g><g data-mml-node="mi" data-latex="数" transform="translate(11000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">数</text></g><g data-mml-node="mi" data-latex="为" transform="translate(12000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">为</text></g></g></g></svg></mjx-container>R(2)=n-d=-2$。</p>
+</blockquote>
+<p>Golomb提出了二元0-1随机序列应该满足的三条原则：</p>
+<ul>
+<li>（1）如果序列的周期为奇数，则要求序列中0和1的个数只能相差1个；如果序列的周期为偶数，则要求序列中0和1的个数相等。</li>
+<li>（2）在一个周期的序列中，要求1游程（包含0的1游程和1的1游程）的个数为总游程数的 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="3.394ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 1500 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="1/2"><g data-mml-node="mn" data-latex="1"><path data-c="31" d="M269 666C228 624 168 603 89 603L89 564C141 564 184 572 217 588L217 82C217 64 213 52 204 47C195 42 170 39 130 39L95 39L95 0C120 2 174 3 257 3C340 3 394 2 419 0L419 39L384 39C343 39 318 42 310 47C302 52 297 64 297 82L297 636C297 660 295 666 269 666Z"></path></g><g data-mml-node="mo" data-latex="/" transform="translate(500,0)"><path data-c="2F" d="M444 718C445 720 445 723 445 726C445 742 437 750 421 750C410 750 403 745 399 734L57-218C56-220 56-223 56-226C56-242 64-250 80-250C91-250 98-245 102-234Z"></path></g><g data-mml-node="mn" data-latex="2" transform="translate(1000,0)"><path data-c="32" d="M237 666C186 666 143 648 106 612C69 576 50 534 50 483C50 449 75 424 106 424C136 424 161 450 161 480C161 513 137 536 105 536C102 536 100 536 98 535C117 584 161 627 224 627C306 627 352 556 352 470C352 403 318 331 250 255L62 43C49 28 50 29 50 0L421 0L450 180L417 180C409 129 402 100 396 91C391 86 361 84 306 84L139 84L236 179C304 243 390 312 419 365C439 400 449 435 449 470C449 588 357 666 237 666Z"></path></g></g></g></svg></mjx-container>；2游程（包含0的2游程和1的2游程）的个数为总游程数的 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="3.394ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 1500 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="1/4"><g data-mml-node="mn" data-latex="1"><path data-c="31" d="M269 666C228 624 168 603 89 603L89 564C141 564 184 572 217 588L217 82C217 64 213 52 204 47C195 42 170 39 130 39L95 39L95 0C120 2 174 3 257 3C340 3 394 2 419 0L419 39L384 39C343 39 318 42 310 47C302 52 297 64 297 82L297 636C297 660 295 666 269 666Z"></path></g><g data-mml-node="mo" data-latex="/" transform="translate(500,0)"><path data-c="2F" d="M444 718C445 720 445 723 445 726C445 742 437 750 421 750C410 750 403 745 399 734L57-218C56-220 56-223 56-226C56-242 64-250 80-250C91-250 98-245 102-234Z"></path></g><g data-mml-node="mn" data-latex="4" transform="translate(1000,0)"><path data-c="34" d="M353 677C344 677 336 672 330 663L28 199L28 163L289 163L289 81C289 63 285 51 278 46C271 41 252 39 219 39L194 39L194 0C223 2 269 3 331 3C393 3 439 2 468 0L468 39L443 39C410 39 391 41 384 46C377 51 373 63 373 81L373 163L471 163L471 202L373 202L373 660C373 670 366 677 353 677M295 553L295 202L67 202Z"></path></g></g></g></svg></mjx-container>；以此类推，<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="0.98ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 433 453"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="c"><g data-mml-node="mi" data-latex="c"><path data-c="1D450" d="M328 325C328 300 341 287 368 287C404 287 427 318 427 354C427 410 368 442 308 442C239 442 176 412 122 353C68 294 41 229 41 159C41 61 106-11 204-11C257-11 304 2 345 27C379 48 404 69 420 90C427 99 430 106 430 109C430 120 425 126 414 126C409 126 404 122 398 114C365 70 324 42 277 30C246 22 223 18 206 18C149 18 121 53 121 122C121 184 150 274 174 317C198 361 249 413 308 413C346 413 372 402 386 381C355 378 328 358 328 325Z"></path></g></g></g></svg></mjx-container> 游程（包含0的 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="0.98ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 433 453"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="c"><g data-mml-node="mi" data-latex="c"><path data-c="1D450" d="M328 325C328 300 341 287 368 287C404 287 427 318 427 354C427 410 368 442 308 442C239 442 176 412 122 353C68 294 41 229 41 159C41 61 106-11 204-11C257-11 304 2 345 27C379 48 404 69 420 90C427 99 430 106 430 109C430 120 425 126 414 126C409 126 404 122 398 114C365 70 324 42 277 30C246 22 223 18 206 18C149 18 121 53 121 122C121 184 150 274 174 317C198 361 249 413 308 413C346 413 372 402 386 381C355 378 328 358 328 325Z"></path></g></g></g></svg></mjx-container> 游程和1的 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="0.98ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 433 453"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="c"><g data-mml-node="mi" data-latex="c"><path data-c="1D450" d="M328 325C328 300 341 287 368 287C404 287 427 318 427 354C427 410 368 442 308 442C239 442 176 412 122 353C68 294 41 229 41 159C41 61 106-11 204-11C257-11 304 2 345 27C379 48 404 69 420 90C427 99 430 106 430 109C430 120 425 126 414 126C409 126 404 122 398 114C365 70 324 42 277 30C246 22 223 18 206 18C149 18 121 53 121 122C121 184 150 274 174 317C198 361 249 413 308 413C346 413 372 402 386 381C355 378 328 358 328 325Z"></path></g></g></g></svg></mjx-container> 游程）的个数为总游程数的 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="4.274ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 1889.2 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="1/2^c"><g data-mml-node="mn" data-latex="1"><path data-c="31" d="M269 666C228 624 168 603 89 603L89 564C141 564 184 572 217 588L217 82C217 64 213 52 204 47C195 42 170 39 130 39L95 39L95 0C120 2 174 3 257 3C340 3 394 2 419 0L419 39L384 39C343 39 318 42 310 47C302 52 297 64 297 82L297 636C297 660 295 666 269 666Z"></path></g><g data-mml-node="mo" data-latex="/" transform="translate(500,0)"><path data-c="2F" d="M444 718C445 720 445 723 445 726C445 742 437 750 421 750C410 750 403 745 399 734L57-218C56-220 56-223 56-226C56-242 64-250 80-250C91-250 98-245 102-234Z"></path></g><g data-mml-node="msup" data-latex="2^c" transform="translate(1000,0)"><g data-mml-node="mn" data-latex="2"><path data-c="32" d="M237 666C186 666 143 648 106 612C69 576 50 534 50 483C50 449 75 424 106 424C136 424 161 450 161 480C161 513 137 536 105 536C102 536 100 536 98 535C117 584 161 627 224 627C306 627 352 556 352 470C352 403 318 331 250 255L62 43C49 28 50 29 50 0L421 0L450 180L417 180C409 129 402 100 396 91C391 86 361 84 306 84L139 84L236 179C304 243 390 312 419 365C439 400 449 435 449 470C449 588 357 666 237 666Z"></path></g><g data-mml-node="mi" transform="translate(533,363) scale(0.707)" data-latex="c"><path data-c="1D450" d="M328 325C328 300 341 287 368 287C404 287 427 318 427 354C427 410 368 442 308 442C239 442 176 412 122 353C68 294 41 229 41 159C41 61 106-11 204-11C257-11 304 2 345 27C379 48 404 69 420 90C427 99 430 106 430 109C430 120 425 126 414 126C409 126 404 122 398 114C365 70 324 42 277 30C246 22 223 18 206 18C149 18 121 53 121 122C121 184 150 274 174 317C198 361 249 413 308 413C346 413 372 402 386 381C355 378 328 358 328 325Z"></path></g></g></g></g></svg></mjx-container>。此外，还要求在等长的游程中，0的游程个数与1的游程个数相等，即要求0的1游程个数=1的1游程个数；0的2游程个数=1的2游程个数；以此类推，0的 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="0.98ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 433 453"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="c"><g data-mml-node="mi" data-latex="c"><path data-c="1D450" d="M328 325C328 300 341 287 368 287C404 287 427 318 427 354C427 410 368 442 308 442C239 442 176 412 122 353C68 294 41 229 41 159C41 61 106-11 204-11C257-11 304 2 345 27C379 48 404 69 420 90C427 99 430 106 430 109C430 120 425 126 414 126C409 126 404 122 398 114C365 70 324 42 277 30C246 22 223 18 206 18C149 18 121 53 121 122C121 184 150 274 174 317C198 361 249 413 308 413C346 413 372 402 386 381C355 378 328 358 328 325Z"></path></g></g></g></svg></mjx-container> 游程个数=1的 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="0.98ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 433 453"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="c"><g data-mml-node="mi" data-latex="c"><path data-c="1D450" d="M328 325C328 300 341 287 368 287C404 287 427 318 427 354C427 410 368 442 308 442C239 442 176 412 122 353C68 294 41 229 41 159C41 61 106-11 204-11C257-11 304 2 345 27C379 48 404 69 420 90C427 99 430 106 430 109C430 120 425 126 414 126C409 126 404 122 398 114C365 70 324 42 277 30C246 22 223 18 206 18C149 18 121 53 121 122C121 184 150 274 174 317C198 361 249 413 308 413C346 413 372 402 386 381C355 378 328 358 328 325Z"></path></g></g></g></svg></mjx-container> 游程个数。</li>
+<li>（3）要求序列的<strong>异相自相关函数是一个常数</strong>。即满足：在一个周期内，不管平移多少位，序列均不会反映出任何信息。</li>
+</ul>
+<p>除了需要满足<strong>Colomb伪随机性测试的条件</strong>，伪随机序列还需要满足</p>
+<ul>
+<li>伪随机序列的<strong>周期足够大</strong>。</li>
+<li>伪随机序列的产生在<strong>计算上是容易</strong>的。</li>
+<li>已知密文和明文的部分信息，<strong>不能确定整个伪随机序列</strong>。</li>
+</ul>
+<h2 id="二、流密码的分类"><a href="#二、流密码的分类" class="headerlink" title="二、流密码的分类"></a>二、流密码的分类</h2><p>依据流密码密钥序列产生的方式，可以将流密码分为<strong>同步流密码</strong>和<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=169383689&amp;content_type=Article&amp;match_order=1&amp;q=%E8%87%AA%E5%90%8C%E6%AD%A5%E6%B5%81%E5%AF%86%E7%A0%81&amp;zhida_source=entity">自同步流密码</a>**两类。</p>
+<p><strong>1、同步流密码：</strong></p>
+<p>在流密码产生密钥序列时，如果<strong>密钥序列的产生与之前明文字符、密文字符均无关</strong>，也即密钥序列的产生可以完全独立于明文加密，则将这种流密码称为同步流密码。</p>
+<p>由于同步流密码的密钥流生成和加密过程是独立的，因此同步流密码可以分为<strong>密钥流产生器</strong>、<strong>加密变换器</strong>两部分。</p>
+<p>在同步流密码中，<strong>前面出现的加解密错误不会影响到后面的加解密</strong>，这是因为相邻两位明文的加密是相互独立，没有关系的。</p>
+<p>同步流密码在加密或解密时，需要使两者<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=169383689&amp;content_type=Article&amp;match_order=1&amp;q=%E5%AF%86%E9%92%A5%E6%B5%81%E7%94%9F%E6%88%90%E5%99%A8&amp;zhida_source=entity">密钥流生成器</a>的状态一致（这里的状态可以决定密钥流生成器产生的密钥），否则会导致加解密密钥不一致，使解密失败。当两者密钥流生成器的状态不一致时，必须借助外接手段来同步，<strong>同步流密码本身不具有自同步功能</strong>。</p>
+<p>在上一讲《分组密码的工作模式》中，<strong>OFB、CTR模式就属于同步流密码</strong>（可以回去复习一下）。</p>
+<p><strong>2、自同步流密码：</strong></p>
+<p>在流密码产生密钥序列时，如果<strong>密钥序列的产生与以往的密文序列有关</strong>，即密钥产生算法是密钥和以往密文序列的函数，则称这种流密码为自同步流密码。</p>
+<p>自同步流密码中，<strong>密钥序列的产生与明文的加密是不独立的</strong>，也是不能分割的。很多情况下，明文或者密文都需要给密钥序列的产生提供反馈。</p>
+<p><strong>自同步流密码具有自同步功能</strong>。因为密钥序列的产生与明密文序列有关，所以加密和解密密钥生成器的状态不一致时，是可以自己进行同步的，无需认为同步。</p>
+<p><strong>自同步流密码可能会对错误进行传播</strong>。因为密钥序列的产生与明文序列有关，所以前边明文的加密错误，会导致后边密钥序列生成出错，导致后边明文序列也加密错误。</p>
+<p>在上一讲《分组密码的工作模式》中，<strong>CFB模式就属于同步流密码</strong>（可以回去复习一下）。</p>
+<h2 id="三、密钥流产生器"><a href="#三、密钥流产生器" class="headerlink" title="三、密钥流产生器"></a>三、密钥流产生器</h2><p><strong>1、密钥流产生器概述：</strong></p>
+<p>前面提到，同步流密码可以分为密钥流产生器和加密变换器两部分。而如何构建一个好的密钥流产生器是同步流密码需要解决的核心问题。</p>
+<p>密钥流产生器的功能是：<strong>在一个输入子密钥</strong> <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="1.179ex" height="1.595ex" role="img" focusable="false" viewBox="0 -694 521 705"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="k"><g data-mml-node="mi" data-latex="k"><path data-c="1D458" d="M409 353C409 327 423 314 450 314C485 314 508 345 508 379C508 418 476 445 437 445C392 445 344 415 291 356C250 311 217 282 190 269L291 679C289 688 287 694 274 694C242 694 166 685 154 684C139 682 132 675 132 660C132 650 141 645 159 645C178 645 204 646 204 632L59 43C56 32 55 25 55 21C55 0 66-11 87-11C104-11 117-3 124 12C129 21 147 92 179 226C231 221 286 196 286 146C286 131 279 101 279 91C279 34 316-11 373-11C431-11 470 41 490 145C490 154 485 159 475 159C466 159 460 152 457 138C435 59 408 19 375 19C357 19 348 33 348 61C348 77 360 131 360 147C360 204 314 239 221 253C244 269 270 292 298 322C326 352 346 371 359 382C386 404 412 415 435 415C445 415 453 413 459 409C432 404 409 379 409 353Z"></path></g></g></g></svg></mjx-container> <strong>的作用下，产生一个符合伪随机序列条件的密钥序列</strong>。数学模型——<a target="_blank" rel="noopener" href="https://zhida.zhihu.com/search?content_id=169383689&amp;content_type=Article&amp;match_order=1&amp;q=%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA&amp;zhida_source=entity">有限状态自动机</a>可以很好地实现这个功能。</p>
+<blockquote>
+<p>[!note] 补充：<br><strong>输入子密钥</strong>：是指输入流密码算法的密钥。用来产生密钥序列。<br><strong>密钥流产生器产生的密钥序列</strong>：指在输入子密钥的作用下，密钥流产生器产生的符合伪随机序列条件的密钥序列。用来跟明文进行运算，对明文加密。</p>
+</blockquote>
+<p><strong>2、有限状态自动机：</strong></p>
+<p>有限状态自动机由一系列不同的状态组成，一个状态在一定条件下可以转换为另一个状态，每一个状态都有一个输出。</p>
+<p>一个有限状态自动机由<strong>两个集合、两个函数、一个初始状态组成。</strong></p>
+<p>分别为：</p>
+<p>一个<strong>输出符号集</strong> <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.002ex;" xmlns="http://www.w3.org/2000/svg" width="1.724ex" height="1.548ex" role="img" focusable="false" viewBox="0 -683 762 684"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="Y"><g data-mml-node="mi" data-latex="Y"><path data-c="1D44C" d="M664 680C646 680 584 683 565 683C550 683 542 675 542 660C542 649 548 644 561 644C582 644 593 638 593 626C593 615 584 600 567 581L342 322L236 609C233 617 231 622 230 625C230 638 248 644 284 644C303 644 312 652 312 668C312 678 306 683 293 683L168 680C146 680 76 683 58 683C43 683 35 675 35 659C35 649 44 644 62 644C80 644 95 642 104 640C123 635 124 632 130 613L252 288C255 281 256 276 256 273L235 190C223 139 215 107 211 94C204 67 197 51 190 46C183 41 160 39 122 39C100 38 91 37 91 15C91 5 97 0 109 0L234 3L360 0C375-1 383 7 383 24C383 31 380 36 375 37C365 38 357 39 352 39C319 40 299 42 294 45C292 46 291 48 291 52C291 56 296 77 305 114L340 253C343 266 347 276 353 282L598 564L611 577C637 603 661 621 682 630C699 638 718 643 739 644C757 646 762 651 762 667C762 678 756 683 745 683C730 683 679 680 664 680Z"></path></g></g></g></svg></mjx-container>，其中包含所有输出符号 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="1.848ex" height="1.464ex" role="img" focusable="false" viewBox="0 -442 817 647"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="y_i"><g data-mml-node="msub" data-latex="y_i"><g data-mml-node="mi" data-latex="y"><path data-c="1D466" d="M163 442C118 442 83 417 58 367C39 328 29 301 29 286C29 277 34 272 45 272C59 272 60 278 64 293C87 372 119 412 160 412C173 412 180 403 180 385C180 369 175 346 164 317C126 214 107 145 107 108C107 32 154-13 231-13C264-13 295-1 323 23C288-109 233-175 158-175C124-175 101-164 89-142C129-140 149-121 149-85C149-60 136-47 109-47C72-47 50-78 50-115C50-170 100-205 158-205C273-205 367-99 392-1L486 377C489 388 490 396 490 401C490 421 479 431 458 431C442 431 429 423 420 408C414 387 409 369 406 354L342 97C332 61 279 16 234 16C196 16 177 41 177 92C177 134 194 198 227 284C240 319 247 343 247 357C247 406 212 442 163 442Z"></path></g><g data-mml-node="mi" transform="translate(523,-150) scale(0.707)" data-latex="i"><path data-c="1D456" d="M284 621C284 648 271 661 244 661C216 661 188 633 188 605C188 578 202 565 229 565C257 565 284 593 284 621M259 138C237 59 205 19 164 19C151 19 144 28 144 47C144 64 173 150 232 306C240 329 244 347 244 360C244 409 210 445 161 445C118 445 84 420 59 369C39 328 29 301 29 288C29 279 34 275 45 275C58 275 60 281 64 295C87 375 118 415 158 415C171 415 178 406 178 387C178 373 175 357 168 338C145 275 121 208 101 155C86 115 78 88 78 74C78 25 114-11 162-11C205-11 239 14 264 64C283 103 293 130 293 145C293 154 288 159 277 159C274 159 259 150 259 138Z"></path></g></g></g></g></svg></mjx-container>。对于0-1二元符号集，<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="1.724ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 762 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="Y={0,1}"><g data-mml-node="mi" data-latex="Y"><path data-c="1D44C" d="M664 680C646 680 584 683 565 683C550 683 542 675 542 660C542 649 548 644 561 644C582 644 593 638 593 626C593 615 584 600 567 581L342 322L236 609C233 617 231 622 230 625C230 638 248 644 284 644C303 644 312 652 312 668C312 678 306 683 293 683L168 680C146 680 76 683 58 683C43 683 35 675 35 659C35 649 44 644 62 644C80 644 95 642 104 640C123 635 124 632 130 613L252 288C255 281 256 276 256 273L235 190C223 139 215 107 211 94C204 67 197 51 190 46C183 41 160 39 122 39C100 38 91 37 91 15C91 5 97 0 109 0L234 3L360 0C375-1 383 7 383 24C383 31 380 36 375 37C365 38 357 39 352 39C319 40 299 42 294 45C292 46 291 48 291 52C291 56 296 77 305 114L340 253C343 266 347 276 353 282L598 564L611 577C637 603 661 621 682 630C699 638 718 643 739 644C757 646 762 651 762 667C762 678 756 683 745 683C730 683 679 680 664 680Z"></path></g></g></g></svg><mjx-break size="4"> </mjx-break><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="5.657ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 2500.4 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="Y={0,1}"><g data-mml-node="mo" data-latex="="><path data-c="3D" d="M698 367L80 367C64 367 56 359 56 344C56 329 64 321 80 321L698 321C714 321 722 329 722 344C722 356 711 367 698 367M698 179L80 179C64 179 56 171 56 156C56 141 64 133 80 133L698 133C714 133 722 141 722 156C722 169 711 179 698 179Z"></path></g><g data-mml-node="TeXAtom" data-latex="{0,1}" data-mjx-texclass="ORD" transform="translate(1055.8,0)"><g data-mml-node="mn" data-latex="0"><path data-c="30" d="M249-22C390-22 460 92 460 320C460 473 428 575 365 625C330 652 291 666 250 666C109 666 39 551 39 320C39 136 88-22 249-22M361 524C368 489 371 425 371 332C371 240 367 172 360 128C347 48 310 8 249 8C226 8 203 17 182 34C155 57 139 104 132 176C129 201 128 253 128 332C128 419 131 480 136 513C145 568 163 603 191 618C213 630 232 636 249 636C314 636 350 583 361 524Z"></path></g><g data-mml-node="mo" data-latex="," transform="translate(500,0)"><path data-c="2C" d="M139 106C107 106 86 82 86 50C86 20 109-5 139-5C153-5 165-1 174 8L175 0C175-63 154-117 112-160C105-168 101-174 101-178C101-188 105-193 114-193C123-193 135-181 152-158C186-110 203-57 203 0C203 53 185 106 139 106Z"></path></g><g data-mml-node="mn" data-latex="1" transform="translate(944.7,0)"><path data-c="31" d="M269 666C228 624 168 603 89 603L89 564C141 564 184 572 217 588L217 82C217 64 213 52 204 47C195 42 170 39 130 39L95 39L95 0C120 2 174 3 257 3C340 3 394 2 419 0L419 39L384 39C343 39 318 42 310 47C302 52 297 64 297 82L297 636C297 660 295 666 269 666Z"></path></g></g></g></g></svg></mjx-container>。</p>
+<p>一个<strong>状态集</strong> <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.05ex;" xmlns="http://www.w3.org/2000/svg" width="1.459ex" height="1.645ex" role="img" focusable="false" viewBox="0 -705 645 727"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="S"><g data-mml-node="mi" data-latex="S"><path data-c="1D446" d="M133 157C133 181 136 201 141 217C141 227 136 232 125 232C120 232 116 230 114 228C109 223 52 8 52-8C52-17 57-22 67-22C72-22 79-17 88-6L133 47C168 1 224-22 300-22C366-22 424 5 476 58C528 111 554 170 554 236C554 283 538 323 505 355C490 368 470 379 445 388C422 393 400 399 378 405L312 423C279 432 254 469 254 509C254 552 271 589 306 621C341 653 380 669 423 669C515 669 561 619 561 520C561 502 557 482 557 465L557 462C560 455 565 451 573 451C582 451 588 459 592 474L645 691C645 700 640 705 630 705C625 705 618 700 609 689L566 637C538 682 491 705 424 705C361 705 304 681 254 634C202 586 176 531 176 468C176 396 223 339 282 323L387 296C441 281 475 262 475 195C475 149 457 108 422 72C387 36 347 17 302 17C204 17 133 60 133 157Z"></path></g></g></g></svg></mjx-container>，其中包含自动机的所有状态 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="1.801ex" height="1.357ex" role="img" focusable="false" viewBox="0 -442 796 599.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="s_i"><g data-mml-node="msub" data-latex="s_i"><g data-mml-node="mi" data-latex="s"><path data-c="1D460" d="M420 354C420 411 362 442 300 442C237 442 192 423 165 385C142 352 130 322 130 295C130 242 165 208 234 193C263 188 285 181 302 173C323 164 333 147 333 123C333 105 325 85 308 62C287 33 250 18 197 18C143 18 108 33 92 62C124 61 151 87 151 119C151 144 138 157 111 157C75 157 52 124 52 88C52 22 124-11 196-11C271-11 325 11 357 56C384 93 397 126 397 156C397 199 376 231 335 252C304 263 280 270 265 273C230 282 194 285 194 328C194 381 244 413 300 413C342 413 369 400 382 375C360 371 337 352 337 327C337 306 348 295 371 295C402 295 420 323 420 354Z"></path></g><g data-mml-node="mi" transform="translate(502,-150) scale(0.707)" data-latex="i"><path data-c="1D456" d="M284 621C284 648 271 661 244 661C216 661 188 633 188 605C188 578 202 565 229 565C257 565 284 593 284 621M259 138C237 59 205 19 164 19C151 19 144 28 144 47C144 64 173 150 232 306C240 329 244 347 244 360C244 409 210 445 161 445C118 445 84 420 59 369C39 328 29 301 29 288C29 279 34 275 45 275C58 275 60 281 64 295C87 375 118 415 158 415C171 415 178 406 178 387C178 373 175 357 168 338C145 275 121 208 101 155C86 115 78 88 78 74C78 25 114-11 162-11C205-11 239 14 264 64C283 103 293 130 293 145C293 154 288 159 277 159C274 159 259 150 259 138Z"></path></g></g></g></g></svg></mjx-container>。</p>
+<p>一个<strong>输出函数</strong> <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="1.249ex" height="2.059ex" role="img" focusable="false" viewBox="0 -705 552 910"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="f"><g data-mml-node="mi" data-latex="f"><path data-c="1D453" d="M552 633C552 677 509 705 462 705C400 705 357 665 334 586C329 568 318 517 302 433L237 433C215 433 204 432 204 411C204 400 214 395 235 395L295 395L222 8C211-49 201-91 192-119C180-156 163-175 141-175C126-175 114-171 103-164C135-159 151-140 151-108C151-82 138-69 111-69C77-69 53-99 53-133C53-177 94-205 141-205C166-205 189-195 208-174C240-141 265-94 283-31C294 8 304 46 311 84L369 395L451 395C474 395 484 396 484 419C484 428 474 433 454 433L377 433C383 474 411 625 420 644C430 665 444 675 462 675C477 675 490 671 501 664C470 657 454 639 454 608C454 582 467 569 494 569C528 569 552 599 552 633Z"></path></g></g></g></svg></mjx-container>，表示在当前状态 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="1.801ex" height="1.357ex" role="img" focusable="false" viewBox="0 -442 796 599.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="s_i"><g data-mml-node="msub" data-latex="s_i"><g data-mml-node="mi" data-latex="s"><path data-c="1D460" d="M420 354C420 411 362 442 300 442C237 442 192 423 165 385C142 352 130 322 130 295C130 242 165 208 234 193C263 188 285 181 302 173C323 164 333 147 333 123C333 105 325 85 308 62C287 33 250 18 197 18C143 18 108 33 92 62C124 61 151 87 151 119C151 144 138 157 111 157C75 157 52 124 52 88C52 22 124-11 196-11C271-11 325 11 357 56C384 93 397 126 397 156C397 199 376 231 335 252C304 263 280 270 265 273C230 282 194 285 194 328C194 381 244 413 300 413C342 413 369 400 382 375C360 371 337 352 337 327C337 306 348 295 371 295C402 295 420 323 420 354Z"></path></g><g data-mml-node="mi" transform="translate(502,-150) scale(0.707)" data-latex="i"><path data-c="1D456" d="M284 621C284 648 271 661 244 661C216 661 188 633 188 605C188 578 202 565 229 565C257 565 284 593 284 621M259 138C237 59 205 19 164 19C151 19 144 28 144 47C144 64 173 150 232 306C240 329 244 347 244 360C244 409 210 445 161 445C118 445 84 420 59 369C39 328 29 301 29 288C29 279 34 275 45 275C58 275 60 281 64 295C87 375 118 415 158 415C171 415 178 406 178 387C178 373 175 357 168 338C145 275 121 208 101 155C86 115 78 88 78 74C78 25 114-11 162-11C205-11 239 14 264 64C283 103 293 130 293 145C293 154 288 159 277 159C274 159 259 150 259 138Z"></path></g></g></g></g></svg></mjx-container> 中，在子密钥 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="1.918ex" height="1.927ex" role="img" focusable="false" viewBox="0 -694 848 851.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="k_i"><g data-mml-node="msub" data-latex="k_i"><g data-mml-node="mi" data-latex="k"><path data-c="1D458" d="M409 353C409 327 423 314 450 314C485 314 508 345 508 379C508 418 476 445 437 445C392 445 344 415 291 356C250 311 217 282 190 269L291 679C289 688 287 694 274 694C242 694 166 685 154 684C139 682 132 675 132 660C132 650 141 645 159 645C178 645 204 646 204 632L59 43C56 32 55 25 55 21C55 0 66-11 87-11C104-11 117-3 124 12C129 21 147 92 179 226C231 221 286 196 286 146C286 131 279 101 279 91C279 34 316-11 373-11C431-11 470 41 490 145C490 154 485 159 475 159C466 159 460 152 457 138C435 59 408 19 375 19C357 19 348 33 348 61C348 77 360 131 360 147C360 204 314 239 221 253C244 269 270 292 298 322C326 352 346 371 359 382C386 404 412 415 435 415C445 415 453 413 459 409C432 404 409 379 409 353Z"></path></g><g data-mml-node="mi" transform="translate(554,-150) scale(0.707)" data-latex="i"><path data-c="1D456" d="M284 621C284 648 271 661 244 661C216 661 188 633 188 605C188 578 202 565 229 565C257 565 284 593 284 621M259 138C237 59 205 19 164 19C151 19 144 28 144 47C144 64 173 150 232 306C240 329 244 347 244 360C244 409 210 445 161 445C118 445 84 420 59 369C39 328 29 301 29 288C29 279 34 275 45 275C58 275 60 281 64 295C87 375 118 415 158 415C171 415 178 406 178 387C178 373 175 357 168 338C145 275 121 208 101 155C86 115 78 88 78 74C78 25 114-11 162-11C205-11 239 14 264 64C283 103 293 130 293 145C293 154 288 159 277 159C274 159 259 150 259 138Z"></path></g></g></g></g></svg></mjx-container> 的作用下，输出一个符号 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="1.848ex" height="1.464ex" role="img" focusable="false" viewBox="0 -442 817 647"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="y_i"><g data-mml-node="msub" data-latex="y_i"><g data-mml-node="mi" data-latex="y"><path data-c="1D466" d="M163 442C118 442 83 417 58 367C39 328 29 301 29 286C29 277 34 272 45 272C59 272 60 278 64 293C87 372 119 412 160 412C173 412 180 403 180 385C180 369 175 346 164 317C126 214 107 145 107 108C107 32 154-13 231-13C264-13 295-1 323 23C288-109 233-175 158-175C124-175 101-164 89-142C129-140 149-121 149-85C149-60 136-47 109-47C72-47 50-78 50-115C50-170 100-205 158-205C273-205 367-99 392-1L486 377C489 388 490 396 490 401C490 421 479 431 458 431C442 431 429 423 420 408C414 387 409 369 406 354L342 97C332 61 279 16 234 16C196 16 177 41 177 92C177 134 194 198 227 284C240 319 247 343 247 357C247 406 212 442 163 442Z"></path></g><g data-mml-node="mi" transform="translate(523,-150) scale(0.707)" data-latex="i"><path data-c="1D456" d="M284 621C284 648 271 661 244 661C216 661 188 633 188 605C188 578 202 565 229 565C257 565 284 593 284 621M259 138C237 59 205 19 164 19C151 19 144 28 144 47C144 64 173 150 232 306C240 329 244 347 244 360C244 409 210 445 161 445C118 445 84 420 59 369C39 328 29 301 29 288C29 279 34 275 45 275C58 275 60 281 64 295C87 375 118 415 158 415C171 415 178 406 178 387C178 373 175 357 168 338C145 275 121 208 101 155C86 115 78 88 78 74C78 25 114-11 162-11C205-11 239 14 264 64C283 103 293 130 293 145C293 154 288 159 277 159C274 159 259 150 259 138Z"></path></g></g></g></g></svg></mjx-container> 的映射过程，即 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="1.848ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 817 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="y_i=f(s_i,k_i)"><g data-mml-node="msub" data-latex="y_i"><g data-mml-node="mi" data-latex="y"><path data-c="1D466" d="M163 442C118 442 83 417 58 367C39 328 29 301 29 286C29 277 34 272 45 272C59 272 60 278 64 293C87 372 119 412 160 412C173 412 180 403 180 385C180 369 175 346 164 317C126 214 107 145 107 108C107 32 154-13 231-13C264-13 295-1 323 23C288-109 233-175 158-175C124-175 101-164 89-142C129-140 149-121 149-85C149-60 136-47 109-47C72-47 50-78 50-115C50-170 100-205 158-205C273-205 367-99 392-1L486 377C489 388 490 396 490 401C490 421 479 431 458 431C442 431 429 423 420 408C414 387 409 369 406 354L342 97C332 61 279 16 234 16C196 16 177 41 177 92C177 134 194 198 227 284C240 319 247 343 247 357C247 406 212 442 163 442Z"></path></g><g data-mml-node="mi" transform="translate(523,-150) scale(0.707)" data-latex="i"><path data-c="1D456" d="M284 621C284 648 271 661 244 661C216 661 188 633 188 605C188 578 202 565 229 565C257 565 284 593 284 621M259 138C237 59 205 19 164 19C151 19 144 28 144 47C144 64 173 150 232 306C240 329 244 347 244 360C244 409 210 445 161 445C118 445 84 420 59 369C39 328 29 301 29 288C29 279 34 275 45 275C58 275 60 281 64 295C87 375 118 415 158 415C171 415 178 406 178 387C178 373 175 357 168 338C145 275 121 208 101 155C86 115 78 88 78 74C78 25 114-11 162-11C205-11 239 14 264 64C283 103 293 130 293 145C293 154 288 159 277 159C274 159 259 150 259 138Z"></path></g></g></g></g></svg><mjx-break size="4"> </mjx-break><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="10.123ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 4474.3 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="y_i=f(s_i,k_i)"><g data-mml-node="mo" data-latex="="><path data-c="3D" d="M698 367L80 367C64 367 56 359 56 344C56 329 64 321 80 321L698 321C714 321 722 329 722 344C722 356 711 367 698 367M698 179L80 179C64 179 56 171 56 156C56 141 64 133 80 133L698 133C714 133 722 141 722 156C722 169 711 179 698 179Z"></path></g><g data-mml-node="mi" data-latex="f" transform="translate(1055.8,0)"><path data-c="1D453" d="M552 633C552 677 509 705 462 705C400 705 357 665 334 586C329 568 318 517 302 433L237 433C215 433 204 432 204 411C204 400 214 395 235 395L295 395L222 8C211-49 201-91 192-119C180-156 163-175 141-175C126-175 114-171 103-164C135-159 151-140 151-108C151-82 138-69 111-69C77-69 53-99 53-133C53-177 94-205 141-205C166-205 189-195 208-174C240-141 265-94 283-31C294 8 304 46 311 84L369 395L451 395C474 395 484 396 484 419C484 428 474 433 454 433L377 433C383 474 411 625 420 644C430 665 444 675 462 675C477 675 490 671 501 664C470 657 454 639 454 608C454 582 467 569 494 569C528 569 552 599 552 633Z"></path></g><g data-mml-node="mo" data-latex="(" transform="translate(1607.8,0)"><path data-c="28" d="M318-248C327-248 332-243 332-234C332-231 330-227 327-223C275-183 233-117 202-26C175 53 161 131 161 208L161 292C161 369 175 447 202 526C233 617 275 683 327 723C330 726 332 730 332 734C332 743 327 748 318 748C317 748 314 747 311 745C251 699 201 631 160 540C121 453 101 371 101 292L101 208C101 129 121 47 160-40C201-131 251-199 311-245C314-247 317-248 318-248Z"></path></g><g data-mml-node="msub" data-latex="s_i" transform="translate(1996.8,0)"><g data-mml-node="mi" data-latex="s"><path data-c="1D460" d="M420 354C420 411 362 442 300 442C237 442 192 423 165 385C142 352 130 322 130 295C130 242 165 208 234 193C263 188 285 181 302 173C323 164 333 147 333 123C333 105 325 85 308 62C287 33 250 18 197 18C143 18 108 33 92 62C124 61 151 87 151 119C151 144 138 157 111 157C75 157 52 124 52 88C52 22 124-11 196-11C271-11 325 11 357 56C384 93 397 126 397 156C397 199 376 231 335 252C304 263 280 270 265 273C230 282 194 285 194 328C194 381 244 413 300 413C342 413 369 400 382 375C360 371 337 352 337 327C337 306 348 295 371 295C402 295 420 323 420 354Z"></path></g><g data-mml-node="mi" transform="translate(502,-150) scale(0.707)" data-latex="i"><path data-c="1D456" d="M284 621C284 648 271 661 244 661C216 661 188 633 188 605C188 578 202 565 229 565C257 565 284 593 284 621M259 138C237 59 205 19 164 19C151 19 144 28 144 47C144 64 173 150 232 306C240 329 244 347 244 360C244 409 210 445 161 445C118 445 84 420 59 369C39 328 29 301 29 288C29 279 34 275 45 275C58 275 60 281 64 295C87 375 118 415 158 415C171 415 178 406 178 387C178 373 175 357 168 338C145 275 121 208 101 155C86 115 78 88 78 74C78 25 114-11 162-11C205-11 239 14 264 64C283 103 293 130 293 145C293 154 288 159 277 159C274 159 259 150 259 138Z"></path></g></g><g data-mml-node="mo" data-latex="," transform="translate(2792.7,0)"><path data-c="2C" d="M139 106C107 106 86 82 86 50C86 20 109-5 139-5C153-5 165-1 174 8L175 0C175-63 154-117 112-160C105-168 101-174 101-178C101-188 105-193 114-193C123-193 135-181 152-158C186-110 203-57 203 0C203 53 185 106 139 106Z"></path></g><g data-mml-node="msub" data-latex="k_i" transform="translate(3237.4,0)"><g data-mml-node="mi" data-latex="k"><path data-c="1D458" d="M409 353C409 327 423 314 450 314C485 314 508 345 508 379C508 418 476 445 437 445C392 445 344 415 291 356C250 311 217 282 190 269L291 679C289 688 287 694 274 694C242 694 166 685 154 684C139 682 132 675 132 660C132 650 141 645 159 645C178 645 204 646 204 632L59 43C56 32 55 25 55 21C55 0 66-11 87-11C104-11 117-3 124 12C129 21 147 92 179 226C231 221 286 196 286 146C286 131 279 101 279 91C279 34 316-11 373-11C431-11 470 41 490 145C490 154 485 159 475 159C466 159 460 152 457 138C435 59 408 19 375 19C357 19 348 33 348 61C348 77 360 131 360 147C360 204 314 239 221 253C244 269 270 292 298 322C326 352 346 371 359 382C386 404 412 415 435 415C445 415 453 413 459 409C432 404 409 379 409 353Z"></path></g><g data-mml-node="mi" transform="translate(554,-150) scale(0.707)" data-latex="i"><path data-c="1D456" d="M284 621C284 648 271 661 244 661C216 661 188 633 188 605C188 578 202 565 229 565C257 565 284 593 284 621M259 138C237 59 205 19 164 19C151 19 144 28 144 47C144 64 173 150 232 306C240 329 244 347 244 360C244 409 210 445 161 445C118 445 84 420 59 369C39 328 29 301 29 288C29 279 34 275 45 275C58 275 60 281 64 295C87 375 118 415 158 415C171 415 178 406 178 387C178 373 175 357 168 338C145 275 121 208 101 155C86 115 78 88 78 74C78 25 114-11 162-11C205-11 239 14 264 64C283 103 293 130 293 145C293 154 288 159 277 159C274 159 259 150 259 138Z"></path></g></g><g data-mml-node="mo" data-latex=")" transform="translate(4085.3,0)"><path data-c="29" d="M78-245C138-199 188-131 229-40C268 47 288 129 288 208L288 292C288 371 268 453 229 540C188 631 138 699 78 745C75 747 72 748 71 748C62 748 57 743 57 734C57 730 59 726 62 723C114 683 156 617 187 526C214 447 228 369 228 292L228 208C228 131 214 53 187-26C156-117 114-183 62-223C59-227 57-231 57-234C57-243 62-248 71-248C72-248 75-247 78-245Z"></path></g></g></g></svg></mjx-container>。</p>
+<p>一个<strong>状态转移函数</strong> <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="1.079ex" height="1.464ex" role="img" focusable="false" viewBox="0 -442 477 647"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="g"><g data-mml-node="mi" data-latex="g"><path data-c="1D454" d="M15-141C15-184 60-205 150-205C197-205 241-193 280-170C324-144 351-109 362-66L471 373C473 383 474 389 474 392C474 412 463 422 442 422C420 422 406 410 399 387C377 424 347 442 310 442C246 442 189 410 140 346C95 286 72 223 72 158C72 71 123-3 207-3C246-3 282 14 315 47L285-71C256-140 211-175 148-175C122-175 100-173 82-169C103-158 113-141 113-118C113-93 99-80 72-80C40-80 15-109 15-141M356 392C376 371 386 351 386 331C386 330 385 325 383 318L336 129C330 106 313 82 286 60C259 38 233 27 210 27C170 27 150 56 150 114C150 169 184 291 204 327C235 384 270 412 311 412C329 412 344 405 356 392Z"></path></g></g></g></svg></mjx-container>，表示在子密钥 $k<em>i<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="20.362ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 9000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex=" 的作用下，当前状态 "><g data-mml-node="mi" data-latex="的"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">的</text></g><g data-mml-node="mi" data-latex="作" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">作</text></g><g data-mml-node="mi" data-latex="用" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">用</text></g><g data-mml-node="mi" data-latex="下" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">下</text></g><g data-mml-node="mi" data-latex="，" transform="translate(4000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="当" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">当</text></g><g data-mml-node="mi" data-latex="前" transform="translate(6000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">前</text></g><g data-mml-node="mi" data-latex="状" transform="translate(7000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">状</text></g><g data-mml-node="mi" data-latex="态" transform="translate(8000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">态</text></g></g></g></svg></mjx-container>s_i<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="18.1ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 8000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex=" 转移为另一个状态 "><g data-mml-node="mi" data-latex="转"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">转</text></g><g data-mml-node="mi" data-latex="移" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">移</text></g><g data-mml-node="mi" data-latex="为" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">为</text></g><g data-mml-node="mi" data-latex="另" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">另</text></g><g data-mml-node="mi" data-latex="一" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">一</text></g><g data-mml-node="mi" data-latex="个" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">个</text></g><g data-mml-node="mi" data-latex="状" transform="translate(6000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">状</text></g><g data-mml-node="mi" data-latex="态" transform="translate(7000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">态</text></g></g></g></svg></mjx-container>s</em>{i+1}<mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="11.312ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 5000 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex=" 的过程，即 "><g data-mml-node="mi" data-latex="的"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">的</text></g><g data-mml-node="mi" data-latex="过" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">过</text></g><g data-mml-node="mi" data-latex="程" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">程</text></g><g data-mml-node="mi" data-latex="，" transform="translate(3000,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" data-latex="即" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">即</text></g></g></g></svg></mjx-container>s_{i+1}=g(s_i,k_i)$。</p>
+<p>一个<strong>初始状态</strong> <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: -0.375ex;" xmlns="http://www.w3.org/2000/svg" width="2.049ex" height="1.375ex" role="img" focusable="false" viewBox="0 -442 905.6 607.6"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="s_0"><g data-mml-node="msub" data-latex="s_0"><g data-mml-node="mi" data-latex="s"><path data-c="1D460" d="M420 354C420 411 362 442 300 442C237 442 192 423 165 385C142 352 130 322 130 295C130 242 165 208 234 193C263 188 285 181 302 173C323 164 333 147 333 123C333 105 325 85 308 62C287 33 250 18 197 18C143 18 108 33 92 62C124 61 151 87 151 119C151 144 138 157 111 157C75 157 52 124 52 88C52 22 124-11 196-11C271-11 325 11 357 56C384 93 397 126 397 156C397 199 376 231 335 252C304 263 280 270 265 273C230 282 194 285 194 328C194 381 244 413 300 413C342 413 369 400 382 375C360 371 337 352 337 327C337 306 348 295 371 295C402 295 420 323 420 354Z"></path></g><g data-mml-node="mn" transform="translate(502,-150) scale(0.707)" data-latex="0"><path data-c="30" d="M249-22C390-22 460 92 460 320C460 473 428 575 365 625C330 652 291 666 250 666C109 666 39 551 39 320C39 136 88-22 249-22M361 524C368 489 371 425 371 332C371 240 367 172 360 128C347 48 310 8 249 8C226 8 203 17 182 34C155 57 139 104 132 176C129 201 128 253 128 332C128 419 131 480 136 513C145 568 163 603 191 618C213 630 232 636 249 636C314 636 350 583 361 524Z"></path></g></g></g></g></svg></mjx-container>，为输出函数和状态转移函数提供一个初始输入。</p>
+<p>通过有限状态自动机中状态的转换、密钥序列的输出，就可以得到符合条件我的伪随机序列。</p>
+<p>符号集和状态集较容易构建，但是输出函数和状态转移函数是相对较难构建的。如何寻找合适的输出函数和状态转移函数？这是我们接下来应该解决的问题。</p>
+<p><strong>3、合适的输出函数和状态转移函数：</strong></p>
+<p>为了使得输出序列和状态转移尽可能随机，我们可以直观知道，<strong>输出函数和状态转移函数最好都是非线性的函数</strong>（线性函数一般会有线性相关的性质，这会使得输出序列、状态转移与输入子密钥相关，而不够随机，因此采用非线性函数）。</p>
+<p>但是，采用非线性状态转移函数的有限自动机理论还不太完善，这会使得整个密钥流生成器的分析受到限制。</p>
+<p>所以，我们只能使用==<strong>线性的状态转移函数</strong>和<strong>非线性的输出函数</strong>==，来构建密钥流产生器。</p>
+<p>这样的密钥流生成器由<strong>线性驱动部分</strong>和<strong>非线性组合部分</strong>组成。</p>
+<p>线性驱动部分==控制生成器的状态转移==，==为非线性组合部分提供统计性能好的序列。==</p>
+<p>非线性组合部分==用这些序列生成满足要求的密钥流序列。==</p>
+<p>线性驱动和非线性组合的具体构造会在下一节中详细讲解。</p>
+</div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <span itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</span>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    
+                </div>
+                <div class="pull-date">
+                    <time datetime="2026-08-12T08:30:06.402Z" itemprop="dateModified">最后编辑：2026-08-12</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 【密码学】（四）分组密码的五大工作模式" href="/Study/Crypto/（四）分组密码的五大工作模式/"><i class="fa fa-angle-left"></i> 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" 【密码学】（六）详解线性反馈移位寄存器（LFSR）" href="/Study/Crypto/（六）详解线性反馈移位寄存器（LFSR）/">下一篇 <i class="fa fa-angle-right"></i></a>
+            </div>
+            
+        </nav>
+    
+    
+        <div class="comment-post">
+            
+        </div>
+    
+</article>
+
+        
+
+            </section>
+
+            
+                
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/assets/avatar.jpg" alt="魏欣怡" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">I don't know, I don't care. All I know is you can take me there.</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                17
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                5
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                0
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix toc-div-class" >
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%B5%81%E5%AF%86%E7%A0%81%E7%9A%84%E8%B5%B7%E6%BA%90%E5%92%8C%E4%BC%AA%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97"><span class="toc-text">一、流密码的起源和伪随机序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%B5%81%E5%AF%86%E7%A0%81%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">二、流密码的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AF%86%E9%92%A5%E6%B5%81%E4%BA%A7%E7%94%9F%E5%99%A8"><span class="toc-text">三、密钥流产生器</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类列表</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Entertainment/">Entertainment</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Entertainment/%E6%B8%B8%E6%88%8F%E8%AF%84%E6%B5%8B/">游戏评测</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%86%E7%A0%81%E5%AD%A6/">密码学</a><span class="category-list-count">13</span></li></ul></li></ul>
+  </aside>
+
+
+            
+                
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/Study/%E8%AF%BE%E7%A8%8B%E6%80%BB%E8%A7%88/"><i class="fa fa-book"></i> 【学习相关】课程总览和学习文件</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/Study/Crypto/%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E5%AF%86%E9%92%A5%E7%AE%A1%E7%90%86/"><i class="fa fa-book"></i> 【密码学】（十二）密钥管理</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/Study/Crypto/%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/"><i class="fa fa-book"></i> 【密码学】（十一）数字签名</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/Study/Crypto/%EF%BC%88%E5%8D%81%EF%BC%89%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81/"><i class="fa fa-book"></i> 【密码学】（十）公钥密码</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/Study/Crypto/%EF%BC%88%E4%B9%9D%EF%BC%89%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E4%B8%8E%E6%9D%82%E5%87%91%E5%87%BD%E6%95%B0/"><i class="fa fa-book"></i> 【密码学】（九）消息认证与杂凑函数</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+            
+
+        
+
+                </div>
+    </div>
+</div>
+
+<footer>
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                            <li>
+                                <a href="https://github.com/Vespertine97" target="_blank" rel="nofollow">
+                                    <i class="fa fa-github"></i>
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="/assets/微信二维码.jpg" target="_blank" rel="nofollow">
+                                    <i class="fa fa-wechat"></i>
+                                </a>
+                            </li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2026 魏欣怡的博客 版权所有.</li>
+                            <li>本站在风中度过了<span id="kr-since">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>自豪地使用 <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a> 主题</li>
+                            <li>站点由 <a href="https://vespertine97.github.io/" target="_blank">魏欣怡</a> 用 <i class="fa fa-heart" style="color:#d43f57"></i> 搭建</li>
+                        </div>
+                        <!-- 额外的追加注入项 -->
+                        
+                            <div>
+                                
+                                    <li>由 <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a> 驱动</li>
+                                
+                                    <li>在 <a href="https://github.io" target="_blank">Github Pages</a> 托管</li>
+                                
+                            </div>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                <!-- 额外的追加注入项 -->
+                
+                
+                    <div class="box search-box">
+                        <a href="/search">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                <div class="box theme-box" id="theme-toggle">
+                    <span class="fa fa-adjust"></span>
+                </div>
+            </div>
+            <div id="gotop-box" class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+
+
+
+
+<!-- 额外的追加注入项 -->
+
+
+        <script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+  <script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+
+
+
+  <script defer src="/vendors/viewerjs@1.11.6/dist/viewer.min.js"></script>
+
+
+<script defer src="/js/kr-core.min.js"></script>
+
+
+  <script defer src="/js/kr-pjax.min.js"></script>
+
+
+<!-- 额外的追加注入项 -->
+
+
+    </body>
+</html>
