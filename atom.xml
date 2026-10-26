@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <author>
+    <name>魏欣怡</name>
+  </author>
+  <generator uri="https://hexo.io/">Hexo</generator>
+  <id>https://vespertine97.github.io/</id>
+  <link href="https://vespertine97.github.io/" rel="alternate"/>
+  <link href="https://vespertine97.github.io/atom.xml" rel="self"/>
+  <rights>All rights reserved 2026, 魏欣怡</rights>
+  <subtitle>君子慎独…</subtitle>
+  <title>魏欣怡的博客</title>
+  <updated>2026-10-26T11:52:51.132Z</updated>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="Research" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Research/"/>
+    <id>https://vespertine97.github.io/Study/Research/MEPS/</id>
+    <link href="https://vespertine97.github.io/Study/Research/MEPS/"/>
+    <published>2026-10-14T06:08:00.000Z</published>
+    <summary>
+      <![CDATA[<h1 id="论文信息"><a href="#论文信息" class="headerlink" title="论文信息"></a>论文信息</h1><p>unsenixsecurity26，香港大学、香港理工大学、香港科技大学</p>
+<h1 id="关注概念"><a href]]>
+    </summary>
+    <title>【论文阅读】MEPS:Privacy-preserving Edge-cloud Video Foundation Model Inference with  Privacy Protectability</title>
+    <updated>2026-10-26T11:52:51.132Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>https://vespertine97.github.io/Study/%E8%AF%BE%E7%A8%8B%E6%80%BB%E8%A7%88/</id>
+    <link href="https://vespertine97.github.io/Study/%E8%AF%BE%E7%A8%8B%E6%80%BB%E8%A7%88/"/>
+    <published>2026-08-12T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<p>写这篇是想给所有上过的课做一个资料总结和评述，希望对你有帮助:)</p>
+<blockquote>
+<ul>
+<li>仅代表北京科技大学学习大纲<br>注：GitHubPage最多传一个G的文件，GithubRelease不知道是网的原因还是啥太慢了。本人想尽各种方法，最后]]>
+    </summary>
+    <title>【学习相关】课程总览和学习文件</title>
+    <updated>2026-08-13T13:54:33.578Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="密码学" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%86%E7%A0%81%E5%AD%A6/"/>
+    <id>https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E5%AF%86%E9%92%A5%E7%AE%A1%E7%90%86/</id>
+    <link href="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E5%AF%86%E9%92%A5%E7%AE%A1%E7%90%86/"/>
+    <published>2026-08-12T06:12:00.000Z</published>
+    <summary>
+      <![CDATA[<h3 id="一、-密钥管理的核心原则与层次模型"><a href="#一、-密钥管理的核心原则与层次模型" class="headerlink" title="一、 密钥管理的核心原则与层次模型"></a>一、 密钥管理的核心原则与层次模型</h3><p>现代密码学的一个基本]]>
+    </summary>
+    <title>【密码学】（十二）密钥管理</title>
+    <updated>2026-08-12T08:31:37.369Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="密码学" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%86%E7%A0%81%E5%AD%A6/"/>
+    <id>https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/</id>
+    <link href="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D/"/>
+    <published>2026-08-12T06:11:00.000Z</published>
+    <summary>
+      <![CDATA[<h3 id="一、-数字签名的意义"><a href="#一、-数字签名的意义" class="headerlink" title="一、 数字签名的意义"></a>一、 数字签名的意义</h3><p>在[[（九）消息认证与杂凑函数]]中，讲到了消息认证码（MAC）。虽然MAC]]>
+    </summary>
+    <title>【密码学】（十一）数字签名</title>
+    <updated>2026-08-12T08:34:09.146Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="密码学" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%86%E7%A0%81%E5%AD%A6/"/>
+    <id>https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E5%8D%81%EF%BC%89%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81/</id>
+    <link href="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E5%8D%81%EF%BC%89%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81/"/>
+    <published>2026-08-12T06:10:00.000Z</published>
+    <summary>
+      <![CDATA[<h3 id="一、-公钥密码体制的意义"><a href="#一、-公钥密码体制的意义" class="headerlink" title="一、 公钥密码体制的意义"></a>一、 公钥密码体制的意义</h3><p>在对称密码体系中，加密和解密使用的是同一个密钥。这带来了致命]]>
+    </summary>
+    <title>【密码学】（十）公钥密码</title>
+    <updated>2026-08-12T08:30:06.403Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="密码学" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%86%E7%A0%81%E5%AD%A6/"/>
+    <id>https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%B9%9D%EF%BC%89%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E4%B8%8E%E6%9D%82%E5%87%91%E5%87%BD%E6%95%B0/</id>
+    <link href="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%B9%9D%EF%BC%89%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E4%B8%8E%E6%9D%82%E5%87%91%E5%87%BD%E6%95%B0/"/>
+    <published>2026-08-12T06:09:00.000Z</published>
+    <summary>
+      <![CDATA[<h2 id="一、-认证与安全的必要性"><a href="#一、-认证与安全的必要性" class="headerlink" title="一、 认证与安全的必要性"></a>一、 认证与安全的必要性</h2><p>在信息安全中，我们不仅要防止信息被偷看，还要防止==信息被篡]]>
+    </summary>
+    <title>【密码学】（九）消息认证与杂凑函数</title>
+    <updated>2026-08-12T08:30:06.403Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="密码学" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%86%E7%A0%81%E5%AD%A6/"/>
+    <id>https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E5%85%AB%EF%BC%89A5%E7%AE%97%E6%B3%95%E3%80%81RC4%E7%AE%97%E6%B3%95/</id>
+    <link href="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E5%85%AB%EF%BC%89A5%E7%AE%97%E6%B3%95%E3%80%81RC4%E7%AE%97%E6%B3%95/"/>
+    <published>2026-08-12T06:08:00.000Z</published>
+    <summary>
+      <![CDATA[<blockquote>
+<p>本文转载自：<a href="https://www.zhihu.com/column/c_1348587875936673792">《现代密码学》课程笔记知乎专栏</a><br>仅作个人学习记录。</p>
+</blockquote>
+<h2 id]]>
+    </summary>
+    <title>【密码学】（八）A5算法、RC4算法</title>
+    <updated>2026-08-12T08:30:06.406Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="密码学" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%86%E7%A0%81%E5%AD%A6/"/>
+    <id>https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%B8%83%EF%BC%89%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%BB%84%E5%90%88%E3%80%81%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90%E5%99%A8/</id>
+    <link href="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%B8%83%EF%BC%89%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%BB%84%E5%90%88%E3%80%81%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%BA%8F%E5%88%97%E7%94%9F%E6%88%90%E5%99%A8/"/>
+    <published>2026-08-12T06:07:00.000Z</published>
+    <summary>
+      <![CDATA[<blockquote>
+<p>本文转载自：<a href="https://www.zhihu.com/column/c_1348587875936673792">《现代密码学》课程笔记知乎专栏</a><br>仅作个人学习记录。</p>
+</blockquote>
+<p>我们曾]]>
+    </summary>
+    <title>【密码学】（七）非线性组合、非线性序列生成器</title>
+    <updated>2026-08-12T08:30:06.403Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="密码学" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%86%E7%A0%81%E5%AD%A6/"/>
+    <id>https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E5%85%AD%EF%BC%89%E8%AF%A6%E8%A7%A3%E7%BA%BF%E6%80%A7%E5%8F%8D%E9%A6%88%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%88LFSR%EF%BC%89/</id>
+    <link href="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E5%85%AD%EF%BC%89%E8%AF%A6%E8%A7%A3%E7%BA%BF%E6%80%A7%E5%8F%8D%E9%A6%88%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%88LFSR%EF%BC%89/"/>
+    <published>2026-08-12T06:06:00.000Z</published>
+    <summary>
+      <![CDATA[<blockquote>
+<p>本文转载自：<a href="https://www.zhihu.com/column/c_1348587875936673792">《现代密码学》课程笔记知乎专栏</a><br>仅作个人学习记录。</p>
+</blockquote>
+<p>上节课]]>
+    </summary>
+    <title>【密码学】（六）详解线性反馈移位寄存器（LFSR）</title>
+    <updated>2026-08-12T08:30:06.406Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="密码学" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%86%E7%A0%81%E5%AD%A6/"/>
+    <id>https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%BA%94%EF%BC%89%E6%B5%81%E5%AF%86%E7%A0%81%E6%A6%82%E8%BF%B0%E3%80%81%E4%BC%AA%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97%E3%80%81%E5%AF%86%E9%92%A5%E6%B5%81%E7%94%9F%E6%88%90%E5%99%A8/</id>
+    <link href="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%BA%94%EF%BC%89%E6%B5%81%E5%AF%86%E7%A0%81%E6%A6%82%E8%BF%B0%E3%80%81%E4%BC%AA%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97%E3%80%81%E5%AF%86%E9%92%A5%E6%B5%81%E7%94%9F%E6%88%90%E5%99%A8/"/>
+    <published>2026-08-12T06:05:00.000Z</published>
+    <summary>
+      <![CDATA[<blockquote>
+<p>本文转载自：<a href="https://www.zhihu.com/column/c_1348587875936673792">《现代密码学》课程笔记知乎专栏</a><br>仅作个人学习记录。</p>
+</blockquote>
+<h2 id]]>
+    </summary>
+    <title>【密码学】（五）流密码概述、伪随机序列、密钥流生成器</title>
+    <updated>2026-08-12T08:30:06.402Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="密码学" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%86%E7%A0%81%E5%AD%A6/"/>
+    <id>https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E5%9B%9B%EF%BC%89%E5%88%86%E7%BB%84%E5%AF%86%E7%A0%81%E7%9A%84%E4%BA%94%E5%A4%A7%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F/</id>
+    <link href="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E5%9B%9B%EF%BC%89%E5%88%86%E7%BB%84%E5%AF%86%E7%A0%81%E7%9A%84%E4%BA%94%E5%A4%A7%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F/"/>
+    <published>2026-08-12T06:04:00.000Z</published>
+    <summary>
+      <![CDATA[<blockquote>
+<p>本文转载自：<a href="https://www.zhihu.com/column/c_1348587875936673792">《现代密码学》课程笔记知乎专栏</a><br>仅作个人学习记录。</p>
+</blockquote>
+<p><a]]>
+    </summary>
+    <title>【密码学】（四）分组密码的五大工作模式</title>
+    <updated>2026-08-12T08:30:06.403Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="密码学" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%86%E7%A0%81%E5%AD%A6/"/>
+    <id>https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%B8%89%EF%BC%89%E5%9B%BD%E5%AF%86SM4%E7%AE%97%E6%B3%95/</id>
+    <link href="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%B8%89%EF%BC%89%E5%9B%BD%E5%AF%86SM4%E7%AE%97%E6%B3%95/"/>
+    <published>2026-08-12T06:03:00.000Z</published>
+    <summary>
+      <![CDATA[<blockquote>
+<p>本文转载自：<a href="https://www.zhihu.com/column/c_1348587875936673792">《现代密码学》课程笔记知乎专栏</a><br>仅作个人学习记录。</p>
+</blockquote>
+<p>SM4]]>
+    </summary>
+    <title>【密码学】（三）国密SM4算法</title>
+    <updated>2026-08-12T08:30:06.403Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="密码学" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%86%E7%A0%81%E5%AD%A6/"/>
+    <id>https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%BA%8C%EF%BC%89%E9%AB%98%E7%BA%A7%E5%8A%A0%E5%AF%86%E6%A0%87%E5%87%86%EF%BC%88AES%EF%BC%89/</id>
+    <link href="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%BA%8C%EF%BC%89%E9%AB%98%E7%BA%A7%E5%8A%A0%E5%AF%86%E6%A0%87%E5%87%86%EF%BC%88AES%EF%BC%89/"/>
+    <published>2026-08-12T06:02:00.000Z</published>
+    <summary>
+      <![CDATA[<blockquote>
+<p>本文转载自：<a href="https://www.zhihu.com/column/c_1348587875936673792">《现代密码学》课程笔记知乎专栏</a><br>仅作个人学习记录。</p>
+</blockquote>
+<p>上一次]]>
+    </summary>
+    <title>【密码学】（二）高级加密标准（AES）</title>
+    <updated>2026-08-12T08:30:06.403Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="密码学" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%86%E7%A0%81%E5%AD%A6/"/>
+    <id>https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%B8%80%EF%BC%89%E5%88%86%E7%BB%84%E5%AF%86%E7%A0%81%E5%92%8CDES/</id>
+    <link href="https://vespertine97.github.io/Study/Crypto/%EF%BC%88%E4%B8%80%EF%BC%89%E5%88%86%E7%BB%84%E5%AF%86%E7%A0%81%E5%92%8CDES/"/>
+    <published>2026-08-12T06:01:00.000Z</published>
+    <summary>
+      <![CDATA[<blockquote>
+<p>本文转载自：<a href="https://www.zhihu.com/column/c_1348587875936673792">《现代密码学》课程笔记知乎专栏</a><br>仅作个人学习记录。</p>
+</blockquote>
+<p>上一讲]]>
+    </summary>
+    <title>【密码学】（一）分组密码和DES</title>
+    <updated>2026-08-12T08:30:06.402Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="学习笔记" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <category term="密码学" scheme="https://vespertine97.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AF%86%E7%A0%81%E5%AD%A6/"/>
+    <id>https://vespertine97.github.io/Study/Crypto/%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2/</id>
+    <link href="https://vespertine97.github.io/Study/Crypto/%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2/"/>
+    <published>2026-08-12T06:00:00.000Z</published>
+    <summary>
+      <![CDATA[<p>密码学真是梦开始的地方。我很喜欢数学，这门课因此也学得很开心。<br>上网自学这块的时候找到了一位疑似同校学姐的知乎专栏，整理的非常详细，可惜只写到A5和RC4就停止了，账号目前也已经注销。<br>所以我这里的密码学笔记前八章转载自知乎专栏（有些部分可能有修改），后面的部分]]>
+    </summary>
+    <title>【密码学】写在前面</title>
+    <updated>2026-08-12T06:50:15.903Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="Entertainment" scheme="https://vespertine97.github.io/categories/Entertainment/"/>
+    <category term="游戏评测" scheme="https://vespertine97.github.io/categories/Entertainment/%E6%B8%B8%E6%88%8F%E8%AF%84%E6%B5%8B/"/>
+    <id>https://vespertine97.github.io/Entertaiment/SweetHome/</id>
+    <link href="https://vespertine97.github.io/Entertaiment/SweetHome/"/>
+    <published>2026-01-20T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<p>有很多想说的。一点一点来吧。<br>看到有很多人觉得这里面女同性恋形象太过刻板化，我觉得这对我而言完全不是一个问题。我们太缺少这种游戏，太缺少这样的人物形象了，有这样的人物塑造的出现该是一件令人高兴的事情。</p>
+<p>以下略有剧透部分 ：</p>
+<p>第一次当然是打出]]>
+    </summary>
+    <title>【游戏评测】纸房子</title>
+    <updated>2026-08-12T08:47:39.618Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="Life" scheme="https://vespertine97.github.io/categories/Life/"/>
+    <id>https://vespertine97.github.io/Life/19%E5%B2%81%E7%94%9F%E6%97%A5/</id>
+    <link href="https://vespertine97.github.io/Life/19%E5%B2%81%E7%94%9F%E6%97%A5/"/>
+    <published>2025-11-03T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<p>19岁不是一个什么重要的关头，但鉴于我本人实在太喜欢过生日，所以每年生日都要好好地过。其实每年我在生日前一周就开始提前激动，但今年没什么太多的实感（因为太忙了？！）。大学这一年真的很多姿多彩，这一年里也有很多新奇的体验。我和去年说的一样有在尝试各种各样的新事物，有在努力大步]]>
+    </summary>
+    <title>19岁生日写给自己的话</title>
+    <updated>2026-08-12T08:53:36.060Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>魏欣怡</name>
+    </author>
+    <category term="Life" scheme="https://vespertine97.github.io/categories/Life/"/>
+    <id>https://vespertine97.github.io/Life/18%E5%B2%81%E7%94%9F%E6%97%A5/</id>
+    <link href="https://vespertine97.github.io/Life/18%E5%B2%81%E7%94%9F%E6%97%A5/"/>
+    <published>2024-11-03T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<p>直到我现在开始写下这段文字的时候，我都有点难以相信明天就是我的十八岁生日。我一直不太希望十八岁的来临，我很喜欢十七岁，即使过得不那么如人意，但那仿佛是最后的被允许不用太操心除学习以外的事情的时光。十八岁像是一个门槛，一个过了这个节点就必须立刻成为一个成熟的人的死线。我不喜欢]]>
+    </summary>
+    <title>18岁生日写给自己的话</title>
+    <updated>2026-08-12T08:51:50.117Z</updated>
+  </entry>
+</feed>
